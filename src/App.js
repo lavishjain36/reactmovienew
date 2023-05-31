@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Navbar from "./components/Navbar";
+import MovieCard from "./components/MovieCard";
+import Footer from "./components/Footer";
+import data from './data/data.json';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+const App=()=>{
+  const [searchvalue,setSearchvalue]=useState("");
+
+const inputHandler=(event)=>{
+  setSearchvalue(()=>event.target.value);
+}
+
+//populate the card logic->filter 
+const returnCards=()=>{
+  return data.filter(
+    (card)=>
+    card.title.toLowerCase().includes(searchvalue.toLowerCase())||searchvalue===""
   );
 }
 
+  return(
+    <div>
+      <Navbar inputHandler={inputHandler}/>
+      <MovieCard data={data} returnCards={returnCards} />
+      <Footer/>
+    </div>
+  )
+}
 export default App;
